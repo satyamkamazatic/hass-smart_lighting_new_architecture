@@ -1,12 +1,15 @@
+
 {
   "domain": "smart_lighting",
   "name": "Smart Lighting (Testing)",
-  "codeowners": ["@satyamkamazatic"],
+  "codeowners": [
+    "@satyamkamazatic"
+  ],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/satyamkamazatic/hass-smart_lighting_new_architecture",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/satyamkamazatic/hass-smart_lighting_new_architecture/issues",
   "requirements": [],
-  "version": "1.2.0"
+  "version": "1.2.1"
 }

@@ -18,7 +18,7 @@ PLATFORMS: list[Platform] = [Platform.LIGHT, Platform.SELECT]
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Smart Lighting from a config entry."""
-    _LOGGER.info("Smart Lighting integration v1.2.0 loading")
+    _LOGGER.info("Smart Lighting integration v1.2.1 loading")
 
     api = BossoApiClient(
         async_get_clientsession(hass),

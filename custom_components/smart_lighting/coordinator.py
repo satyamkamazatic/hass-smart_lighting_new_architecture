@@ -171,19 +171,19 @@ class BossoCoordinator(DataUpdateCoordinator[dict[int, dict[str, Any]]]):
 
         # ---- Debug: trace the preset response structure ----------------
         _LOGGER.debug(
-            "BOSSO_V1.2 Preset %d raw keys: %s",
+            "BOSSO_V1.2.1 Preset %d raw keys: %s",
             preset_id, list(preset_data.keys()),
         )
         raw_device_field = preset_data.get("device")
         _LOGGER.debug(
-            "BOSSO_V1.2 Preset %d device field: type=%s value=%s",
+            "BOSSO_V1.2.1 Preset %d device field: type=%s value=%s",
             preset_id,
             type(raw_device_field).__name__,
             raw_device_field,
         )
         device_i = get_device_i_array(preset_data)
         _LOGGER.debug(
-            "BOSSO_V1.2 Preset %d get_device_i_array result: type=%s len=%s",
+            "BOSSO_V1.2.1 Preset %d get_device_i_array result: type=%s len=%s",
             preset_id,
             type(device_i).__name__,
             len(device_i) if isinstance(device_i, list) else "N/A",
@@ -196,7 +196,7 @@ class BossoCoordinator(DataUpdateCoordinator[dict[int, dict[str, Any]]]):
         ) or has_valid_i_array(get_zones_i_array(preset_data))
 
         _LOGGER.debug(
-            "BOSSO_V1.2 Preset %d has_i_array=%s", preset_id, preset_has_i_array
+            "BOSSO_V1.2.1 Preset %d has_i_array=%s", preset_id, preset_has_i_array
         )
 
         if preset_has_i_array:

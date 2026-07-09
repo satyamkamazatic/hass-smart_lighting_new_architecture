@@ -135,11 +135,25 @@ def build_preset_apply_payload(
             led_count,
             len(resized),
         )
+        # Include all preset fields alongside the i-array. Some presets
+        # have an i-array of empty strings but still rely on fx/col/etc.
+        # for the actual look (e.g. "Aquaman" fx=77). Sending everything
+        # is safe: for real i-array presets the extra fields are ignored,
+        # for effect-with-blank-i presets they're essential.
         return {
             "device": {"device": device_id, "i": resized},
+            "fx": preset_data.get("fx"),
+            "sx": preset_data.get("sx"),
+            "ix": preset_data.get("ix"),
+            "pal": preset_data.get("pal"),
+            "col": preset_data.get("col"),
+            "c1x": preset_data.get("c1x"),
+            "c2x": preset_data.get("c2x"),
+            "c3x": preset_data.get("c3x"),
+            "rev": preset_data.get("rev"),
+            "mi": preset_data.get("mi"),
             "is_cct_enabled": True,
             "cct": preset_data.get("cct", 127),
-            "fx": None,
         }
 
     # ---- Case 3: full preset payload --------------------------------
@@ -150,6 +164,9 @@ def build_preset_apply_payload(
         "ix": preset_data.get("ix"),
         "pal": preset_data.get("pal"),
         "col": preset_data.get("col"),
+        "c1x": preset_data.get("c1x"),
+        "c2x": preset_data.get("c2x"),
+        "c3x": preset_data.get("c3x"),
         "rev": preset_data.get("rev"),
         "mi": preset_data.get("mi"),
         "is_cct_enabled": True,
