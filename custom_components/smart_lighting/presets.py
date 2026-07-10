@@ -61,22 +61,40 @@ def resize_i_array(i_array: list[Any], led_count: int) -> list[Any]:
 def get_device_i_array(preset_data: dict[str, Any]) -> Any:
     """Extract the i array from the preset data.
 
-    The API may return the i array in two different locations depending
+    The API may return the i array in different locations depending
     on the preset type / API version:
-      1. Nested under ``device``:  ``preset_data["device"]["i"]``
-      2. At the top level:         ``preset_data["i"]``
+      1. v1 — nested under ``device``:   ``preset_data["device"]["i"]``
+      2. v2 — nested under ``devices``:  ``preset_data["devices"][0]["i"]``
+         (v2 returns a list of device objects)
+      3. Fallback — at the top level:    ``preset_data["i"]``
 
-    We check the nested location first (more specific), then fall back
-    to the top-level key.
+    We check all locations, most specific first.
     """
+    # v1 format: "device": {"i": [...]}
     device = preset_data.get("device")
     if isinstance(device, dict):
         nested_i = device.get("i")
         if isinstance(nested_i, list) and len(nested_i) > 0:
+            _LOGGER.debug("get_device_i_array: found i-array in v1 'device' key (len=%d)", len(nested_i))
             return nested_i
 
+    # v2 format: "devices": [{"device": 1, "i": [...]}, ...]
+    devices = preset_data.get("devices")
+    if isinstance(devices, list) and len(devices) > 0:
+        first_device = devices[0]
+        if isinstance(first_device, dict):
+            nested_i = first_device.get("i")
+            if isinstance(nested_i, list) and len(nested_i) > 0:
+                _LOGGER.debug("get_device_i_array: found i-array in v2 'devices[0]' key (len=%d)", len(nested_i))
+                return nested_i
+
     # Fallback: top-level "i" key
-    return preset_data.get("i")
+    top_i = preset_data.get("i")
+    if isinstance(top_i, list) and len(top_i) > 0:
+        _LOGGER.debug("get_device_i_array: found i-array at top-level 'i' key (len=%d)", len(top_i))
+    else:
+        _LOGGER.debug("get_device_i_array: no i-array found in device/devices/top-level")
+    return top_i
 
 
 def get_zones_i_array(preset_data: dict[str, Any]) -> list[Any]:
