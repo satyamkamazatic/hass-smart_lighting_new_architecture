@@ -57,9 +57,12 @@ DOMAIN = "smart_lighting"
 
 # Bosso API base URLs.
 # v1 — auth, effects, and fallback for device/preset endpoints
-API_BASE = "https://staging.be.bosso.biz/api/v1"
+#API_BASE = "https://staging.be.bosso.biz/api/v1"
+API_BASE = "https://be.bosso.biz/api/v1"
 # v2 — primary for device and preset endpoints
-API_BASE_V2 = "https://staging.be.bosso.biz/api/v2"
+API_BASE_V2 = "https://be.bosso.biz/api/v2"
+#API_BASE_V2 = "https://staging.be.bosso.biz/api/v2"
+
 
 # Auth endpoints — TODO confirm exact paths with backend team
 LOGIN_PATH = "/auth/login/"
